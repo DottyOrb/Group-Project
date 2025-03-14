@@ -38,18 +38,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("meleeEnemy"))
-
-
-
+        if (other.gameObject.layer == LayerMask.NameToLayer("meleeEnemy") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             playerHealth--;
-            healthText.text = "Player Health: 3 " + playerHealth.ToString();
+            healthText.text = "Player Health: " + playerHealth.ToString();
             if (playerHealth <= 0)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
 ;
-                }
+        }
     } 
 }
