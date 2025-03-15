@@ -65,6 +65,7 @@ public class Weaponfollow : MonoBehaviour
             projectile.destroyed += BulletDestroyed;
             _bulletActive = true;
         }
+
     }
 
     private void BulletDestroyed()
