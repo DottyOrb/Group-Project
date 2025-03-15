@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-// tutorial used https://www.youtube.com/watch?v=UjqhsTce_L0&t=30s
+// tutorial used https://www.youtube.com/watch?v=UjqhsTce_L0&t=30s for part of the code
 public class Weaponfollow : MonoBehaviour
 {
     public Transform player; 
     public float followSpeed = 5f; 
     public float rotationSpeed = 10f; 
     public bool flipOnOppositeDirection = true; 
-    private Vector3 offset; 
+    private Vector3 offset;
+    private bool _bulletActive;
+    public Projectile bulletPrefab;
 
     void Start()
     {
-        offset = transform.position - player.position; // Calculate initial offset
+        offset = transform.position - player.position; 
     }
 
     void Update()
@@ -29,6 +31,15 @@ public class Weaponfollow : MonoBehaviour
         Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
+        //if the button is pressed down then the bullet will fire
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+
+        }
+
+
+
         // Flip the sword if needed
         if (flipOnOppositeDirection)
         {
@@ -44,5 +55,23 @@ public class Weaponfollow : MonoBehaviour
 
 
     }
+
+
+    private void Shoot()
+    {
+        if (!_bulletActive)
+        {
+            Projectile projectile = Instantiate(this.bulletPrefab, this.transform.position, Quaternion.identity);
+            projectile.destroyed += BulletDestroyed;
+            _bulletActive = true;
+        }
+
+    }
+
+    private void BulletDestroyed()
+    {
+        _bulletActive = false;
+    }
+
 
 }

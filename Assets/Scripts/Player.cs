@@ -10,7 +10,8 @@ public class Player : MonoBehaviour
 
     public TMP_Text healthText;
 
-    private bool _laserActive;
+
+   
 
     private void Update()
     {
@@ -34,6 +35,9 @@ public class Player : MonoBehaviour
 
 
     }
+
+  
+
 
 
     private void OnTriggerEnter2D(Collider2D other)
