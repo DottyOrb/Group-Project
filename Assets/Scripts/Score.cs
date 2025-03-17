@@ -10,7 +10,7 @@ public class Score : MonoBehaviour
 
     void Start()
     {
-        scoreText.text = "Score: " + score.ToString();
+        scoreText.text = "SCORE: " + score.ToString();
     }
 
     private void Awake()
@@ -21,7 +21,7 @@ public class Score : MonoBehaviour
     public void AddToScore(int EnemyScore)
     {
         score += EnemyScore;
-        scoreText.text = "Score: " + score.ToString();
+        scoreText.text = "SCORE: " + score.ToString();
     }
 
 
