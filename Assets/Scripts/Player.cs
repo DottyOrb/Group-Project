@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("meleeEnemy") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
             playerHealth--;
-            healthText.text = "Player Health: " + playerHealth.ToString();
+            healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
