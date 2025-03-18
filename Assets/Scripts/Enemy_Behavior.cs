@@ -47,11 +47,7 @@ public class Enemy_Behavior : MonoBehaviour
         }
         
         
-       // if (health <= 0)
-        //{
-         //   Score.Instance.AddToScore(EnemyScore);
-          //  Destroy(gameObject);
-        //} 
+     
         
     }
 
