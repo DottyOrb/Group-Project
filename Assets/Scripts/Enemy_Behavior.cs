@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
+using System.Runtime.CompilerServices;
+
 
 public class Enemy_Behavior : MonoBehaviour
 {
@@ -11,8 +13,10 @@ public class Enemy_Behavior : MonoBehaviour
     public int attackPower; // How much damage the Enemy does
     public int health;
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
-    [SerializeField] public int score;
+    [SerializeField] public int EnemyScore;
+    public int amountKilled;
     #endregion
+
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
@@ -43,6 +47,7 @@ public class Enemy_Behavior : MonoBehaviour
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
 
+
         if (health <= 0)
         {
             // Score Script here
@@ -61,6 +66,7 @@ public class Enemy_Behavior : MonoBehaviour
                 PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
             }
         }
+
     }
 
     IEnumerator AttackCooldown()
@@ -77,4 +83,31 @@ public class Enemy_Behavior : MonoBehaviour
         int finalDamage = damage * (100 / defence);
         health -= finalDamage;
     }
+
+
+    private void EnemyKilled()
+    {
+        this.amountKilled++;
+            if (this.amountKilled >= 100)
+        {
+
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sword"))
+        {
+            health--;
+            if (health <= 0)
+            {
+                Score.Instance.AddToScore(EnemyScore);
+                Destroy(gameObject);
+            }
+            
+        }
+    }
+
+   
+
 }
