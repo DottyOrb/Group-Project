@@ -15,9 +15,9 @@ TagManager:
   - Obstacle
   - Wall
   - Projectile
-  - 
-  - 
-  - 
+  - EnemyMelee
+  - EnemyRanged
+  - Sword
   - 
   - 
   - 
