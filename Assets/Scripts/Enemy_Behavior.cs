@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.AI;
 using System.Runtime.CompilerServices;
 
-
 public class Enemy_Behavior : MonoBehaviour
 {
     #region Public Variables
@@ -14,9 +13,9 @@ public class Enemy_Behavior : MonoBehaviour
     public int health;
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
     [SerializeField] public int EnemyScore;
-    public int amountKilled;
     #endregion
-
+    public int amountKilled;
+    
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
@@ -46,14 +45,10 @@ public class Enemy_Behavior : MonoBehaviour
             agent.speed = speed;
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
-
-
-        if (health <= 0)
-        {
-            // Score Script here
-            Destroy(gameObject);
-        }
-
+        
+        
+     
+        
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -67,6 +62,12 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
 
+      
+
+
+
+        
+      
     }
 
     IEnumerator AttackCooldown()
@@ -109,5 +110,4 @@ public class Enemy_Behavior : MonoBehaviour
     }
 
    
-
 }
