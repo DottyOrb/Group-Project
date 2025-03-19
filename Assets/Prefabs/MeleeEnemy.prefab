@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3526125711251966766}
   - component: {fileID: 6894110332676938733}
   - component: {fileID: 7435184162800476586}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MeleeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4339175011497146099}
   - component: {fileID: 1845054877258673190}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: AttackHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
