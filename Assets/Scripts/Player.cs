@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
             healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SceneManager.LoadScene("GameOver");
             }
 ;
         }
