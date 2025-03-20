@@ -21,4 +21,9 @@ public class Enemy_Bullet_Script : MonoBehaviour
     {
         rb.linearVelocity = transform.right * force;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Destroy(gameObject);
+    }
 }

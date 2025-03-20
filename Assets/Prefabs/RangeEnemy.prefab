@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3758700176459694618}
   - component: {fileID: 5095824205805607865}
   - component: {fileID: 3467624367575841078}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: RangeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8938264962173509406}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Firing Point
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}

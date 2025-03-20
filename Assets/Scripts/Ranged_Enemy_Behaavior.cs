@@ -27,6 +27,11 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     [SerializeField] Transform target;
     #endregion
 
+    private void Awake()
+    {
+        GetTarget();
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -57,7 +62,6 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     {
         if (timeToFire <= 0f)
         {
-            Debug.Log("shoot");
             Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
             timeToFire = fireRate;
         }
@@ -105,6 +109,14 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
                 Score.Instance.AddToScore(EnemyScore);
                 Destroy(gameObject);
             }
+        }
+    }
+
+    private void GetTarget()
+    {
+        if (GameObject.FindGameObjectWithTag("Player"))
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 }
