@@ -13,8 +13,8 @@ public class Enemy_Behavior : MonoBehaviour
     public int health;
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
     [SerializeField] public int EnemyScore;
-    #endregion
     public int amountKilled;
+    #endregion
     
 
     #region Private Variables
@@ -23,7 +23,10 @@ public class Enemy_Behavior : MonoBehaviour
     NavMeshAgent agent;
     [SerializeField] Transform target;
     #endregion
-
+    private void Awake()
+    {
+        GetTarget();
+    }
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -45,10 +48,6 @@ public class Enemy_Behavior : MonoBehaviour
             agent.speed = speed;
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
-        
-        
-     
-        
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -61,13 +60,6 @@ public class Enemy_Behavior : MonoBehaviour
                 PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
             }
         }
-
-      
-
-
-
-        
-      
     }
 
     IEnumerator AttackCooldown()
@@ -105,9 +97,13 @@ public class Enemy_Behavior : MonoBehaviour
                 Score.Instance.AddToScore(EnemyScore);
                 Destroy(gameObject);
             }
-            
         }
     }
-
-   
+    private void GetTarget()
+    {
+        if (GameObject.FindGameObjectWithTag("Player"))
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+    }
 }
