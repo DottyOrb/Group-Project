@@ -5,11 +5,12 @@ public class Score : MonoBehaviour
 {
     public static Score Instance;
     public TMP_Text scoreText;
-
-    int score = 0;
+    public int score;
+    
 
     void Start()
     {
+        score = 0;
         scoreText.text = "SCORE: " + score.ToString();
     }
 
@@ -22,8 +23,14 @@ public class Score : MonoBehaviour
     {
         score += EnemyScore;
         scoreText.text = "SCORE: " + score.ToString();
+
+      
+       
+
+
     }
 
+    
 
     void Update()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 // tutorial used https://www.youtube.com/watch?v=UjqhsTce_L0&t=30s for part of the code
@@ -13,11 +14,11 @@ public class Weaponfollow : MonoBehaviour
     private float timer;
     public float timeBetweenFiring;
     public PauseMenu pauseMenu;
+    public Score scoreScript;
+    
 
     void Start()
     {
-  
-
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
@@ -32,38 +33,47 @@ public class Weaponfollow : MonoBehaviour
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
 
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
-
-            if (Input.GetMouseButtonDown(0) && canFire)
-            {
-                canFire = false;
-                Instantiate(bullet, bulletTransform.position, Quaternion.identity);
-            }
-
-            if (!canFire)
-            {
-                timer += Time.deltaTime;
-                if (timer > timeBetweenFiring)
-                {
-                    canFire = true;
-                    timer = 0;
-                }
-            }
         }
+
+       
+        /*if (!canFire)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeBetweenFiring)
+            {
+                canFire = true;
+                timer = 0;
+            }
+
+
+
+
+        }*/
         //if the button is pressed down then the bullet will fire
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) && canFire)
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             if (!PauseMenu.isPaused) 
             {
-                canFire = false;
+                //canFire = false;
                 Instantiate(bullet, bulletTransform.position, Quaternion.identity);
             }
-        } 
+
+        }
 
 
 
-       
+
+        Debug.Log(canFire);
 
 
+    }
+
+    private void shoot()
+    {
+        if (!canFire)
+        {
+
+        }
     }
 
 

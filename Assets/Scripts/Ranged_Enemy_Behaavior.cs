@@ -1,37 +1,43 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
-using System.Runtime.CompilerServices;
+using UnityEditor;
 
-public class Enemy_Behavior : MonoBehaviour
+public class Ranged_Enemy_Behaavior : MonoBehaviour
 {
     #region Public Variables
     public float speed; // Controls movement speed
     public float distanceBetween; // Distance for when Enemy stops moving if too close to player
-    public float attackSpeed = 1f; // Cooldown time between Attacks
     public int attackPower; // How much damage the Enemy does
     public int health;
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
     [SerializeField] public int EnemyScore;
     public int amountKilled;
+    public Transform firingPoint;
+    public float fireRate;
+    public float enableShootingDistance;
+    public GameObject bulletPrefab;
     #endregion
-    
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
     private bool canAttack = true; // Controls Attack Delay
+    private float timeToFire;
     NavMeshAgent agent;
     [SerializeField] Transform target;
     #endregion
+
     private void Awake()
     {
         GetTarget();
     }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        timeToFire = 0f;
     }
 
     void Update()
@@ -48,6 +54,21 @@ public class Enemy_Behavior : MonoBehaviour
             agent.speed = speed;
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
+
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        if (timeToFire <= 0f)
+        {
+            Instantiate(bulletPrefab, firingPoint.position, firingPoint.rotation);
+            timeToFire = fireRate;
+        }
+        else
+        {
+            timeToFire -= Time.deltaTime;
+        }
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -56,19 +77,10 @@ public class Enemy_Behavior : MonoBehaviour
         {
             if (canAttack)
             {
-                StartCoroutine(AttackCooldown());
+                //Attack Script was here
                 PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
             }
         }
-    }
-
-    IEnumerator AttackCooldown()
-    {
-        canAttack = false;
-
-        yield return new WaitForSeconds(attackSpeed);
-
-        canAttack = true;
     }
 
     public void DamageEnemy(int damage)
@@ -78,10 +90,13 @@ public class Enemy_Behavior : MonoBehaviour
     }
 
 
-    public void EnemyKilled()
+    private void EnemyKilled()
     {
         this.amountKilled++;
-           
+        if (this.amountKilled >= 100)
+        {
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -96,6 +111,7 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
     }
+
     private void GetTarget()
     {
         if (GameObject.FindGameObjectWithTag("Player"))
