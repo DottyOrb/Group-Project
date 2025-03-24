@@ -183,7 +183,7 @@ MonoBehaviour:
   attackPower: 5
   health: 20
   defence: 500
-  EnemyScore: 10
+  EnemyScore: 100
   amountKilled: 0
   target: {fileID: 0}
 --- !u!195 &7435184162800476586

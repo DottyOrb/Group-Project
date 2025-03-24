@@ -78,13 +78,10 @@ public class Enemy_Behavior : MonoBehaviour
     }
 
 
-    private void EnemyKilled()
+    public void EnemyKilled()
     {
         this.amountKilled++;
-            if (this.amountKilled >= 100)
-        {
-
-        }
+           
     }
 
     private void OnTriggerEnter2D(Collider2D other)
