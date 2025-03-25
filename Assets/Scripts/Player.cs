@@ -10,10 +10,10 @@ public class Player : MonoBehaviour
 
     public TMP_Text healthText;
 
-
+public Score scoreScript;
    
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -32,14 +32,13 @@ public class Player : MonoBehaviour
         {
             this.transform.position += Vector3.down * this.speed * Time.deltaTime;
         }
+    if(scoreScript.score == 50)
+        {
+            playerHealth++;
+        }
 
 
     }
-
-  
-
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
