@@ -181,7 +181,7 @@ MonoBehaviour:
   distanceBetween: 1.5
   attackSpeed: 2
   attackPower: 5
-  health: 20
+  health: 1
   defence: 500
   EnemyScore: 100
   amountKilled: 0
