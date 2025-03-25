@@ -827,7 +827,7 @@ MonoBehaviour:
   canFire: 1
   timeBetweenFiring: 1
   pauseMenu: {fileID: 0}
-  scoreScript: {fileID: 0}
+  scoreScript: {fileID: 72554592}
 --- !u!1 &124858782
 GameObject:
   m_ObjectHideFlags: 0
