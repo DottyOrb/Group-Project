@@ -56,8 +56,8 @@ public class Enemy_Behavior : MonoBehaviour
         {
             if (canAttack)
             {
-                StartCoroutine(AttackCooldown());
-                PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
+                //StartCoroutine(AttackCooldown());
+                //PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
             }
         }
     }
@@ -78,18 +78,15 @@ public class Enemy_Behavior : MonoBehaviour
     }
 
 
-    private void EnemyKilled()
+    public void EnemyKilled()
     {
         this.amountKilled++;
-            if (this.amountKilled >= 100)
-        {
-
-        }
+           
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Sword"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
             health--;
             if (health <= 0)

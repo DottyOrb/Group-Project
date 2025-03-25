@@ -181,9 +181,9 @@ MonoBehaviour:
   distanceBetween: 1.5
   attackSpeed: 2
   attackPower: 5
-  health: 20
+  health: 1
   defence: 500
-  EnemyScore: 10
+  EnemyScore: 100
   amountKilled: 0
   target: {fileID: 0}
 --- !u!195 &7435184162800476586
