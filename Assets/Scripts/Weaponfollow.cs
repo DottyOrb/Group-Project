@@ -78,7 +78,7 @@ public class Weaponfollow : MonoBehaviour
 
         } */
         
-        Debug.Log(canFire);
+        //Debug.Log(canFire);
 
 
     }

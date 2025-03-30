@@ -14,12 +14,13 @@ public class Enemy_Behavior : MonoBehaviour
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
     [SerializeField] public int EnemyScore;
     public int amountKilled;
+    public GameObject enemySpawner;
     #endregion
     
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
-    private bool canAttack = true; // Controls Attack Delay
+    //private bool canAttack = true; // Controls Attack Delay
     NavMeshAgent agent;
     [SerializeField] Transform target;
     #endregion
@@ -50,33 +51,32 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (canAttack)
-            {
-                //StartCoroutine(AttackCooldown());
-                //PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-            }
-        }
-    }
+    //void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        if (canAttack)
+    //        {
+    //            //StartCoroutine(AttackCooldown());
+    //            //PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
+    //        }
+    //    }
+    //}
 
-    IEnumerator AttackCooldown()
-    {
-        canAttack = false;
+    //IEnumerator AttackCooldown()
+    //{
+    //    canAttack = false;
 
-        yield return new WaitForSeconds(attackSpeed);
+    //    yield return new WaitForSeconds(attackSpeed);
 
-        canAttack = true;
-    }
+    //    canAttack = true;
+    //}
 
     public void DamageEnemy(int damage)
     {
         int finalDamage = damage * (100 / defence);
         health -= finalDamage;
     }
-
 
     public void EnemyKilled()
     {
@@ -89,10 +89,21 @@ public class Enemy_Behavior : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
             health--;
+            int spawnEnemySpawner = Random.Range(0, 16);
             if (health <= 0)
             {
-                Score.Instance.AddToScore(EnemyScore);
-                Destroy(gameObject);
+                if (spawnEnemySpawner <= 14)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                }
+                else if (spawnEnemySpawner == 15)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                    Vector2 spawnPosition = (Vector2)gameObject.transform.position;
+                    Instantiate(enemySpawner, spawnPosition, Quaternion.identity);
+                }
             }
         }
     }
