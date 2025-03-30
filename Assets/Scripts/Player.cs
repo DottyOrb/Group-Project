@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Collections;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -10,8 +12,15 @@ public class Player : MonoBehaviour
 
     public TMP_Text healthText;
 
+    public float knockbackForce = 2f;
 
-   
+    private Rigidbody2D rb;
+
+
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void Update()
     {
@@ -44,6 +53,9 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
+            Vector2 direction = (this.transform.position - other.transform.position).normalized;
+            StartCoroutine(PlayerKnockback(direction, knockbackForce));
+
             playerHealth--;
             healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
@@ -52,5 +64,14 @@ public class Player : MonoBehaviour
             }
 ;
         }
-    } 
+    }
+
+    public IEnumerator PlayerKnockback(Vector2 direction, float knockbackForce)
+    {
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1);
+
+        rb.linearVelocity = Vector2.zero;
+    }
 }
