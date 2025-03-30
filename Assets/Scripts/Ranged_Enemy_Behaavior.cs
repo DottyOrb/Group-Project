@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEditor;
+using UnityEngine.XR;
 
 public class Ranged_Enemy_Behaavior : MonoBehaviour
 {
@@ -17,23 +18,28 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     public float fireRate;
     public float enableShootingDistance;
     public GameObject bulletPrefab;
+    public GameObject enemySpawner;
+    public static Ranged_Enemy_Behaavior instance;
     #endregion
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
-    private bool canAttack = true; // Controls Attack Delay
+    //private bool canAttack = true; // Controls Attack Delay
     private float timeToFire;
     NavMeshAgent agent;
     [SerializeField] Transform target;
+    private Rigidbody2D rb;
     #endregion
 
     private void Awake()
     {
+        instance = this;
         GetTarget();
     }
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -71,24 +77,23 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (canAttack)
-            {
-                //Attack Script was here
-                PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-            }
-        }
-    }
+    //void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        if (canAttack)
+    //        {
+    //            //Attack Script was here
+    //            PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
+    //        }
+    //    }
+    //}
 
-    public void DamageEnemy(int damage)
-    {
-        int finalDamage = damage * (100 / defence);
-        health -= finalDamage;
-    }
-
+    //public void DamageEnemy(int damage)
+    //{
+    //    int finalDamage = damage * (100 / defence);
+    //    health -= finalDamage;
+    //}
 
     private void EnemyKilled()
     {
@@ -101,13 +106,24 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Sword"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
             health--;
+            int spawnEnemySpawner = Random.Range(0, 16);
             if (health <= 0)
             {
-                Score.Instance.AddToScore(EnemyScore);
-                Destroy(gameObject);
+                if (spawnEnemySpawner <=14)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                }
+                else if (spawnEnemySpawner == 15)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                    Vector2 spawnPosition = (Vector2)gameObject.transform.position;
+                    Instantiate(enemySpawner, spawnPosition, Quaternion.identity);
+                }
             }
         }
     }
@@ -118,5 +134,19 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
+    }
+
+    public IEnumerator EnemyKnockBack(float knockbackDuration, float knockbackPower, Transform obj)
+    {
+        float timer = 0;
+
+        while (knockbackDuration > timer)
+        {
+            timer += Time.deltaTime;
+            Vector2 direction = (obj.transform.position - this.transform.position).normalized;
+            rb.AddForce(-direction * knockbackPower);
+        }
+
+        yield return 0;
     }
 }

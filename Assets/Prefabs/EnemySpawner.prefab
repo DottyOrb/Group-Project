@@ -154,3 +154,4 @@ MonoBehaviour:
   minSpawnInterval: 5
   maxSpawnInterval: 10
   spawnRadius: 2
+  spawnerHealth: 8
