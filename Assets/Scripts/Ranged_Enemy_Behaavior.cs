@@ -12,14 +12,14 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     public int attackPower; // How much damage the Enemy does
     public int health;
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
-    [SerializeField] public int EnemyScore;
+    public int EnemyScore;
     public int amountKilled;
     public Transform firingPoint;
     public float fireRate;
     public float enableShootingDistance;
     public GameObject bulletPrefab;
     public GameObject enemySpawner;
-    public static Ranged_Enemy_Behaavior instance;
+    public float knockbackForce = 2f;
     #endregion
 
     #region Private Variables
@@ -33,7 +33,6 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
         GetTarget();
     }
 
@@ -108,7 +107,11 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
+            Vector2 direction = (this.transform.position - other.transform.position).normalized;
+            StartCoroutine(enemyKnockback(direction, knockbackForce));
+
             health--;
+
             int spawnEnemySpawner = Random.Range(0, 16);
             if (health <= 0)
             {
@@ -136,17 +139,12 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
         }
     }
 
-    public IEnumerator EnemyKnockBack(float knockbackDuration, float knockbackPower, Transform obj)
+    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce)
     {
-        float timer = 0;
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
-        while (knockbackDuration > timer)
-        {
-            timer += Time.deltaTime;
-            Vector2 direction = (obj.transform.position - this.transform.position).normalized;
-            rb.AddForce(-direction * knockbackPower);
-        }
+        yield return new WaitForSeconds(1);
 
-        yield return 0;
+        rb.linearVelocity = Vector2.zero;
     }
 }
