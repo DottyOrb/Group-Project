@@ -4,6 +4,9 @@ using UnityEngine.UI;
 using UnityEditor;
 #endif
 
+
+
+
 [ExecuteInEditMode()]
 public class ProgressBar : MonoBehaviour
 {
@@ -22,7 +25,7 @@ public class ProgressBar : MonoBehaviour
     public Image Mask;
     public Image Fill;
     public Color Color;
-
+    public Score scoreScript;
     void Start()
     {
 
