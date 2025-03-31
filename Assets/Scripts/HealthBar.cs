@@ -8,7 +8,7 @@ using UnityEditor;
 
 
 [ExecuteInEditMode()]
-public class ProgressBar : MonoBehaviour
+public class HealthBar : MonoBehaviour
 {
 #if UNITY_EDITOR
     [MenuItem("GameObject/UI/Linear Progress Bar")]
@@ -25,7 +25,7 @@ public class ProgressBar : MonoBehaviour
     public Image Mask;
     public Image Fill;
     public Color Color;
-    public Score scoreScript;
+    public Player playerScript;
     void Start()
     {
 

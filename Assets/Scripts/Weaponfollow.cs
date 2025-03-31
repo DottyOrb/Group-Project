@@ -59,6 +59,7 @@ public class Weaponfollow : MonoBehaviour
          if(scoreScript.score >= 100)
          {
             canFire = true;
+            StartCoroutine(ShootingActive(10));
                  }
         
        
@@ -81,6 +82,13 @@ public class Weaponfollow : MonoBehaviour
         //Debug.Log(canFire);
 
 
+    }
+
+    private IEnumerator ShootingActive(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        scoreScript.score = 0;
+        canFire = false;
     }
 
     
