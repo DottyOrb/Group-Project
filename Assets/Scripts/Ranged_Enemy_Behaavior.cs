@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEditor;
+using UnityEngine.XR;
 
 public class Ranged_Enemy_Behaavior : MonoBehaviour
 {
@@ -11,20 +12,23 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     public int attackPower; // How much damage the Enemy does
     public int health;
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
-    [SerializeField] public int EnemyScore;
+    public int EnemyScore;
     public int amountKilled;
     public Transform firingPoint;
     public float fireRate;
     public float enableShootingDistance;
     public GameObject bulletPrefab;
+    public GameObject enemySpawner;
+    public float knockbackForce = 2f;
     #endregion
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
-    private bool canAttack = true; // Controls Attack Delay
+    //private bool canAttack = true; // Controls Attack Delay
     private float timeToFire;
     NavMeshAgent agent;
     [SerializeField] Transform target;
+    private Rigidbody2D rb;
     #endregion
 
     private void Awake()
@@ -34,6 +38,7 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
 
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -71,24 +76,23 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (canAttack)
-            {
-                //Attack Script was here
-                PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-            }
-        }
-    }
+    //void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        if (canAttack)
+    //        {
+    //            //Attack Script was here
+    //            PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
+    //        }
+    //    }
+    //}
 
-    public void DamageEnemy(int damage)
-    {
-        int finalDamage = damage * (100 / defence);
-        health -= finalDamage;
-    }
-
+    //public void DamageEnemy(int damage)
+    //{
+    //    int finalDamage = damage * (100 / defence);
+    //    health -= finalDamage;
+    //}
 
     private void EnemyKilled()
     {
@@ -101,13 +105,28 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Sword"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
+            Vector2 direction = (this.transform.position - other.transform.position).normalized;
+            StartCoroutine(enemyKnockback(direction, knockbackForce));
+
             health--;
+
+            int spawnEnemySpawner = Random.Range(0, 16);
             if (health <= 0)
             {
-                Score.Instance.AddToScore(EnemyScore);
-                Destroy(gameObject);
+                if (spawnEnemySpawner <=14)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                }
+                else if (spawnEnemySpawner == 15)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                    Vector2 spawnPosition = (Vector2)gameObject.transform.position;
+                    Instantiate(enemySpawner, spawnPosition, Quaternion.identity);
+                }
             }
         }
     }
@@ -118,5 +137,14 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
+    }
+
+    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce)
+    {
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1);
+
+        rb.linearVelocity = Vector2.zero;
     }
 }

@@ -16,7 +16,6 @@ public class Weaponfollow : MonoBehaviour
     public float timeBetweenFiring;
     public PauseMenu pauseMenu;
     public Score scoreScript;
-    
 
 
     
@@ -78,8 +77,17 @@ public class Weaponfollow : MonoBehaviour
 
 
         } */
-
-
         
-        }        
+        //Debug.Log(canFire);
+
+
+    }
+
+    
+
+
+   
+
+   
+
 }
