@@ -14,6 +14,8 @@ public class Enemy_Spawner : MonoBehaviour
     public float maxSpawnInterval = 10f;
 
     public float spawnRadius = 2f;
+
+    public int spawnerHealth = 8;
     #endregion
 
     private void Start()
@@ -37,12 +39,23 @@ public class Enemy_Spawner : MonoBehaviour
                 int chooseEnemyType = Random.Range(0, 5);
                 if (chooseEnemyType >= 0 && chooseEnemyType <= 3)
                 {
-                Instantiate(MeleeEnemyPrefab, spawnPosition, Quaternion.identity);
+                    Instantiate(MeleeEnemyPrefab, spawnPosition, Quaternion.identity);
                 }
-                else if ( chooseEnemyType == 4)
+                else if (chooseEnemyType == 4)
                 {
                     Instantiate(RangedEnemyPrefab, spawnPosition, Quaternion.identity);
                 }
+            }
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
+        {
+            spawnerHealth--;
+            if (spawnerHealth <= 0)
+            {
+                Destroy(gameObject);
             }
         }
     }

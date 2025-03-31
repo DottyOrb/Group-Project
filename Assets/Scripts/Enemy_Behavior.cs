@@ -14,14 +14,16 @@ public class Enemy_Behavior : MonoBehaviour
     public int defence; // Final Damage = Incoming Damage * (100/(100defence))
     [SerializeField] public int EnemyScore;
     public int amountKilled;
-    #endregion
-    
+    public GameObject enemySpawner;
+    public float knockbackForce = 2f;
+    #endregion 
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
-    private bool canAttack = true; // Controls Attack Delay
+    //private bool canAttack = true; // Controls Attack Delay
     NavMeshAgent agent;
     [SerializeField] Transform target;
+    private Rigidbody2D rb;
     #endregion
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class Enemy_Behavior : MonoBehaviour
     }
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -50,33 +53,32 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (canAttack)
-            {
-                StartCoroutine(AttackCooldown());
-                PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-            }
-        }
-    }
+    //void OnTriggerStay2D(Collider2D other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        if (canAttack)
+    //        {
+    //            //StartCoroutine(AttackCooldown());
+    //            //PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
+    //        }
+    //    }
+    //}
 
-    IEnumerator AttackCooldown()
-    {
-        canAttack = false;
+    //IEnumerator AttackCooldown()
+    //{
+    //    canAttack = false;
 
-        yield return new WaitForSeconds(attackSpeed);
+    //    yield return new WaitForSeconds(attackSpeed);
 
-        canAttack = true;
-    }
+    //    canAttack = true;
+    //}
 
     public void DamageEnemy(int damage)
     {
         int finalDamage = damage * (100 / defence);
         health -= finalDamage;
     }
-
 
     public void EnemyKilled()
     {
@@ -86,13 +88,27 @@ public class Enemy_Behavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Sword"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
+            Vector2 direction = (this.transform.position - other.transform.position).normalized;
+            StartCoroutine(enemyKnockback(direction, knockbackForce));
+
             health--;
+            int spawnEnemySpawner = Random.Range(0, 16);
             if (health <= 0)
             {
-                Score.Instance.AddToScore(EnemyScore);
-                Destroy(gameObject);
+                if (spawnEnemySpawner <= 14)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                }
+                else if (spawnEnemySpawner == 15)
+                {
+                    Score.Instance.AddToScore(EnemyScore);
+                    Destroy(gameObject);
+                    Vector2 spawnPosition = (Vector2)gameObject.transform.position;
+                    Instantiate(enemySpawner, spawnPosition, Quaternion.identity);
+                }
             }
         }
     }
@@ -102,5 +118,13 @@ public class Enemy_Behavior : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
+    }
+    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce)
+    {
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1);
+
+        rb.linearVelocity = Vector2.zero;
     }
 }

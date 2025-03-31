@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Collections;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -10,10 +12,17 @@ public class Player : MonoBehaviour
 
     public TMP_Text healthText;
 
-public Score scoreScript;
-   
+    public float knockbackForce = 2f;
 
-    void Update()
+    private Rigidbody2D rb;
+
+
+    public void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -32,17 +41,21 @@ public Score scoreScript;
         {
             this.transform.position += Vector3.down * this.speed * Time.deltaTime;
         }
-    if(scoreScript.score == 50)
-        {
-            playerHealth++;
-        }
 
 
     }
+
+  
+
+
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
+            Vector2 direction = (this.transform.position - other.transform.position).normalized;
+            StartCoroutine(PlayerKnockback(direction, knockbackForce));
+
             playerHealth--;
             healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
@@ -51,5 +64,14 @@ public Score scoreScript;
             }
 ;
         }
-    } 
+    }
+
+    public IEnumerator PlayerKnockback(Vector2 direction, float knockbackForce)
+    {
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(1);
+
+        rb.linearVelocity = Vector2.zero;
+    }
 }
