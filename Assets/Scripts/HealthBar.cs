@@ -11,10 +11,10 @@ using UnityEditor;
 public class HealthBar : MonoBehaviour
 {
 #if UNITY_EDITOR
-    [MenuItem("GameObject/UI/Linear Progress Bar")]
+    [MenuItem("GameObject/UI/Linear Health Bar")]
     public static void AddLinearProgressBar()
     {
-        GameObject obj = Instantiate(Resources.Load<GameObject>("UI/Linear Progress Bar"));
+        GameObject obj = Instantiate(Resources.Load<GameObject>("UI/Linear Health Bar"));
         obj.transform.SetParent(Selection.activeGameObject.transform, false);
     }
 #endif
