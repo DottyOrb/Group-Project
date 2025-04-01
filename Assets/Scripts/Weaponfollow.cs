@@ -56,12 +56,20 @@ public class Weaponfollow : MonoBehaviour
             Instantiate(bullet, bulletTransform.position, Quaternion.identity);
         }
 
-         if(scoreScript.score >= 100)
-         {
+        if (scoreScript.score >= 100)
+        {
             canFire = true;
-                 }
+            StartCoroutine(ShootingActive(10));
+
+        }
+
+        if (scoreScript.score == 0)
+        {
+            canFire = false;
+        }
         
-       
+
+
         /* if (!canFire)
         {
             timer += Time.deltaTime;
@@ -77,10 +85,19 @@ public class Weaponfollow : MonoBehaviour
 
 
         } */
+
+            //Debug.Log(canFire);
+
+
+    }
+
+    private IEnumerator ShootingActive(int delay)
+    {
+
+        yield return new WaitForSeconds(delay);
+        scoreScript.score = 0;
         
-        //Debug.Log(canFire);
-
-
+       
     }
 
     

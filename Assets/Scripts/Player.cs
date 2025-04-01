@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 5.0f;
 
-    public int playerHealth = 3;
+    public int playerHealth = 5;
 
     public TMP_Text healthText;
 
@@ -16,10 +16,15 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private SpriteRenderer spriteRenderer;
 
+    public Sprite[] animationSprites;
+
+    public HealthBar healthBarScript;
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+       
     }
 
     private void Update()
@@ -41,6 +46,9 @@ public class Player : MonoBehaviour
         {
             this.transform.position += Vector3.down * this.speed * Time.deltaTime;
         }
+
+
+        healthBarScript.Current = playerHealth;
 
 
     }
