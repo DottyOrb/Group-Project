@@ -1,16 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Score : MonoBehaviour
 {
     public static Score Instance;
     public TMP_Text scoreText;
     public int score;
-    
+    public ProgressBar progressBar;
 
     void Start()
     {
-        score = 0;
+      score = 0;
         scoreText.text = "SCORE: " + score.ToString();
     }
 
@@ -24,8 +25,7 @@ public class Score : MonoBehaviour
         score += EnemyScore;
         scoreText.text = "SCORE: " + score.ToString();
 
-      
-       
+        progressBar.Current = score;       
 
 
     }
