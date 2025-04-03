@@ -149,8 +149,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MeleeEnemyPrefab: {fileID: 857896491672317732, guid: 42e938c0078caf84696a2358c951d1b9, type: 3}
   RangedEnemyPrefab: {fileID: 3294773889381981304, guid: 286d7776677b6a24ab66e9653c08ed28, type: 3}
-  minEnemiesPerBatch: 2
-  maxEnemiesPerBatch: 5
+  minEnemiesPerBatch: 1
+  maxEnemiesPerBatch: 3
   minSpawnInterval: 5
   maxSpawnInterval: 10
   spawnRadius: 2
