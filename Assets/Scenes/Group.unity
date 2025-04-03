@@ -726,7 +726,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &60189767
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31039,7 +31039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &668669137
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34173,6 +34173,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6567150064895446137, guid: 5effcc218116e2a4b9305cf96a84a0f4, type: 3}
+    - target: {fileID: 6850302600657539701, guid: 01c80b9a807e08f45adc993337d66ad5, type: 3}
+      propertyPath: m_Color.b
+      value: 0.9716981
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850302600657539701, guid: 01c80b9a807e08f45adc993337d66ad5, type: 3}
+      propertyPath: m_Color.g
+      value: 0.092420004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6850302600657539701, guid: 01c80b9a807e08f45adc993337d66ad5, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
