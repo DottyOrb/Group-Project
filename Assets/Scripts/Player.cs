@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -21,32 +22,52 @@ public class Player : MonoBehaviour
     public Sprite[] animationSprites;
 
     public HealthBar healthBarScript;
+    private Animator animator;
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       
+       animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
+            animator.SetBool("isWalking", true);
+            animator.SetFloat("InputX", -1);
             this.transform.position += Vector3.left * this.speed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
+            animator.SetBool("isWalking", true);
+            animator.SetFloat("InputX", 1);
             this.transform.position += Vector3.right * this.speed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
 
         {
+            animator.SetBool("isWalking", true);
+            animator.SetFloat("InputY", 1);
             this.transform.position += Vector3.up * this.speed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
+            animator.SetBool("isWalking", true);
+            animator.SetFloat("InputY", -1);
             this.transform.position += Vector3.down * this.speed * Time.deltaTime;
         }
-
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) 
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetFloat("LastInputX", animator.GetFloat("InputX"));
+            animator.SetFloat("InputX", 0);
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetFloat("LastInputY", animator.GetFloat("InputY"));
+            animator.SetFloat("InputY", 0);
+        }
 
         healthBarScript.Current = playerHealth;
 
