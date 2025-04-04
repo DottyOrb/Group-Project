@@ -19,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public HealthBar healthBarScript;
     private Animator animator;
     private bool canMove = true;
+    public Coroutine IFramesRef;
+    public bool canBeAttacked = true;
 
     public void Start()
     {
@@ -32,47 +34,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearVelocity = moveInput * speed;
         }
-        /*if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputX", -1);
-            this.transform.position += Vector3.left * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputX", 1);
-            this.transform.position += Vector3.right * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputY", 1);
-            this.transform.position += Vector3.up * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputY", -1);
-            this.transform.position += Vector3.down * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) 
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", animator.GetFloat("InputX"));
-            animator.SetFloat("InputX", 0);
-        }
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputY", animator.GetFloat("InputY"));
-            animator.SetFloat("InputY", 0);
-        }*/
 
         healthBarScript.Current = playerHealth;
-
-
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -98,9 +61,12 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
         {
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
-            StartCoroutine(PlayerKnockback(direction, knockbackForce));
-
-            playerHealth--;
+            if (IFramesRef == null && canBeAttacked == true)
+            {
+                StartCoroutine(PlayerKnockback(direction, knockbackForce));
+                playerHealth--;
+                IFramesRef = StartCoroutine(IFrames());
+            }
             healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
             {
@@ -113,11 +79,20 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator PlayerKnockback(Vector2 direction, float knockbackForce)
     {
         canMove = false;
+        rb.linearVelocity = Vector2.zero;
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(0.2f);
 
         rb.linearVelocity = Vector2.zero;
         canMove = true;
+    }
+
+    public IEnumerator IFrames()
+    {
+        canBeAttacked = false;
+        yield return new WaitForSeconds(0.5f);
+        canBeAttacked = true;
+        IFramesRef = null;
     }
 }
