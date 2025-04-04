@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using UnityEditor;
 using UnityEngine.XR;
 
-public class Ranged_Enemy_Behaavior : MonoBehaviour
+public class Ranged_Enemy_Behavior : MonoBehaviour
 {
     #region Public Variables
     public float speed; // Controls movement speed
@@ -143,7 +143,7 @@ public class Ranged_Enemy_Behaavior : MonoBehaviour
     {
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.6f);
 
         rb.linearVelocity = Vector2.zero;
     }
