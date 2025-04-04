@@ -123,7 +123,7 @@ public class Enemy_Behavior : MonoBehaviour
     {
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
 
         rb.linearVelocity = Vector2.zero;
     }

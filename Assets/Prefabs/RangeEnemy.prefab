@@ -207,11 +207,11 @@ MonoBehaviour:
   EnemyScore: 10
   amountKilled: 0
   firingPoint: {fileID: 8938264962173509406}
-  fireRate: 1
+  fireRate: 2
   enableShootingDistance: 5
   bulletPrefab: {fileID: 1330659445340559062, guid: ade603096d63e4f4daf7eee85a7dc778, type: 3}
   enemySpawner: {fileID: 9154713833286279543, guid: ff10437ed90408f4e92083f9dfeac5a4, type: 3}
-  knockbackForce: 2
+  knockbackForce: 3
   target: {fileID: 0}
 --- !u!1 &8461963231291789118
 GameObject:

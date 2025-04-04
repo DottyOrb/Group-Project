@@ -533,6 +533,7 @@ MonoBehaviour:
   - {fileID: 5818432802145494917, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
   - {fileID: -1448781112204477573, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
   healthBarScript: {fileID: 0}
+  canBeAttacked: 1
 --- !u!1 &8617684222807416902
 GameObject:
   m_ObjectHideFlags: 0
