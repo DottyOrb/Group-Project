@@ -1,29 +1,54 @@
 using UnityEngine;
 using Unity.Collections;
 using System.Collections;
+using static UnityEngine.GraphicsBuffer;
+using Unity.VisualScripting;
 public class Enemy_Spawner : MonoBehaviour
 {
     #region Public Variables
     public GameObject MeleeEnemyPrefab;
     public GameObject RangedEnemyPrefab;
+    public Transform target;
 
     public int minEnemiesPerBatch = 2;
     public int maxEnemiesPerBatch = 4;
 
     public float minSpawnInterval = 5f;
     public float maxSpawnInterval = 10f;
+    
+    public float distance;
+    public float startSpawning = 10f;
 
     public float spawnRadius = 2f;
 
     public int spawnerHealth = 8;
-    #endregion
 
+    public Coroutine SpawnEnemiesRef;
+    #endregion
     private void Start()
     {
-        StartCoroutine(SpawnEnemies());
+        GetTarget();
     }
-
-    private IEnumerator SpawnEnemies()
+    private void Update()
+    {
+        distance = Vector2.Distance(transform.position, target.transform.position);
+        if (distance <= startSpawning)
+        {
+            if (SpawnEnemiesRef == null)
+            {
+                SpawnEnemiesRef = StartCoroutine(SpawnEnemies());
+            }
+        }
+        else
+        {
+            if (SpawnEnemiesRef != null)
+            {
+                StopAllCoroutines();
+                SpawnEnemiesRef = null;
+            }
+        }
+    }
+    public IEnumerator SpawnEnemies()
     {
         while (true)
         {
@@ -57,6 +82,13 @@ public class Enemy_Spawner : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+    }
+    private void GetTarget()
+    {
+        if (GameObject.FindGameObjectWithTag("Player"))
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 }
