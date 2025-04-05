@@ -91,7 +91,7 @@ public class Weaponfollow : MonoBehaviour
 
     }
 
-    private IEnumerator ShootingActive(int delay)
+    private IEnumerator ShootingActive(float delay)
     {
 
         yield return new WaitForSeconds(delay);
