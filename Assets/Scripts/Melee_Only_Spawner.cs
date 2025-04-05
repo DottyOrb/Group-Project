@@ -1,13 +1,9 @@
 using UnityEngine;
-using Unity.Collections;
 using System.Collections;
-using static UnityEngine.GraphicsBuffer;
-using Unity.VisualScripting;
-public class Enemy_Spawner : MonoBehaviour
+public class Melee_Only_Spawner : MonoBehaviour
 {
     #region Public Variables
     public GameObject MeleeEnemyPrefab;
-    public GameObject RangedEnemyPrefab;
     public Transform target;
 
     public int minEnemiesPerBatch = 1;
@@ -15,7 +11,7 @@ public class Enemy_Spawner : MonoBehaviour
 
     public float minSpawnInterval = 5f;
     public float maxSpawnInterval = 10f;
-    
+
     public float distance;
     public float startSpawning = 10f;
 
@@ -61,15 +57,7 @@ public class Enemy_Spawner : MonoBehaviour
                 Vector2 spawnOffset = Random.insideUnitCircle * spawnRadius;
                 Vector2 spawnPosition = (Vector2)gameObject.transform.position + spawnOffset;
 
-                int chooseEnemyType = Random.Range(0, 5);
-                if (chooseEnemyType >= 0 && chooseEnemyType <= 3)
-                {
-                    Instantiate(MeleeEnemyPrefab, spawnPosition, Quaternion.identity);
-                }
-                else if (chooseEnemyType == 4)
-                {
-                    Instantiate(RangedEnemyPrefab, spawnPosition, Quaternion.identity);
-                }
+                Instantiate(MeleeEnemyPrefab, spawnPosition, Quaternion.identity);
             }
         }
     }
