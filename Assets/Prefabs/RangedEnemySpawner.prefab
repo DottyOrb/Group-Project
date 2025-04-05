@@ -151,9 +151,9 @@ MonoBehaviour:
   target: {fileID: 0}
   minEnemiesPerBatch: 1
   maxEnemiesPerBatch: 3
-  minSpawnInterval: 5
-  maxSpawnInterval: 10
+  minSpawnInterval: 2
+  maxSpawnInterval: 5
   distance: 0
-  startSpawning: 10
+  startSpawning: 20
   spawnRadius: 2
   spawnerHealth: 5
