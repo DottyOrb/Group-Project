@@ -35,10 +35,12 @@ public class ProgressBar : MonoBehaviour
     void Update()
     {
         GetCurrentFill();
+        Current = scoreScript.score;
     }
 
     void GetCurrentFill()
     {
+     
         float currentOffset = Current - Minimum;
         float maximumOffset = Maximum - Minimum;
         float fillAmount = currentOffset / maximumOffset;
