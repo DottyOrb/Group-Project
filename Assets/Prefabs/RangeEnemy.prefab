@@ -212,6 +212,13 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1330659445340559062, guid: ade603096d63e4f4daf7eee85a7dc778, type: 3}
   enemySpawner: {fileID: 9154713833286279543, guid: ff10437ed90408f4e92083f9dfeac5a4, type: 3}
   knockbackForce: 3
+  animationSprites:
+  - {fileID: 8652755702478706507, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
+  - {fileID: 6934474749590887437, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
+  - {fileID: 1929564408087558218, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
+  - {fileID: 2380088040337544770, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
+  - {fileID: 7631703046775898965, guid: 161bae7869231324c9f68620eb0a3d14, type: 3}
+  animationTime: 0.5
   target: {fileID: 0}
 --- !u!1 &8461963231291789118
 GameObject:

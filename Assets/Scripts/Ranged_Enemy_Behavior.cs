@@ -20,6 +20,8 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject enemySpawner;
     public float knockbackForce = 2f;
+    public Sprite[] animationSprites;
+    public float animationTime = 1.0f;
     #endregion
 
     #region Private Variables
@@ -29,11 +31,15 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
     NavMeshAgent agent;
     [SerializeField] Transform target;
     private Rigidbody2D rb;
+    private SpriteRenderer _spriteRenderer;
+    private int _animationFrame;
     #endregion
 
     private void Awake()
     {
         GetTarget();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        InvokeRepeating(nameof(AnimateSprite), this.animationTime, this.animationTime);
     }
 
     void Start()
@@ -146,5 +152,17 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
         yield return new WaitForSeconds(0.6f);
 
         rb.linearVelocity = Vector2.zero;
+    }
+
+
+    private void AnimateSprite()
+    {
+        _animationFrame++;
+
+        if (_animationFrame >= animationSprites.Length)
+        {
+            _animationFrame = 0;
+        }
+        _spriteRenderer.sprite = this.animationSprites[_animationFrame];
     }
 }
