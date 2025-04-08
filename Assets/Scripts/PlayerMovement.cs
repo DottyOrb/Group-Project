@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     public Coroutine IFramesRef;
     public bool canBeAttacked = true;
+    public Score scoreScript;
 
     public void Start()
     {
@@ -36,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         healthBarScript.Current = playerHealth;
+
+        
     }
 
     public void Move(InputAction.CallbackContext context)
