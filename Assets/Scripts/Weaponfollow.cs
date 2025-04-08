@@ -17,6 +17,7 @@ public class Weaponfollow : MonoBehaviour
     public PauseMenu pauseMenu;
     public Score scoreScript;
     public ProgressBar progressBar;
+    public PlayerMovement playerMovement;
 
     
 
@@ -59,6 +60,7 @@ public class Weaponfollow : MonoBehaviour
        if (scoreScript.score >= 100)
         {
             canFire = true;
+            playerMovement.playerHealth = 5;
             StartCoroutine(ShootingActive(10));
            
         }
@@ -97,6 +99,7 @@ public class Weaponfollow : MonoBehaviour
         
         yield return new WaitForSeconds(delay);
         scoreScript.score = 0;
+        
 
     }
 
