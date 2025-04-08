@@ -5,7 +5,12 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool isPaused;
     public GameObject PauseMenuObject;
+    public GameObject ControlPopUpObject;
 
+    private void Start()
+    {
+        ControlPopUpObject.SetActive(false);
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -33,6 +38,16 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = !isPaused;
         PauseToggle();
+    }
+
+    public void OpenControls() 
+    {
+        ControlPopUpObject.SetActive(true);
+    }
+    
+    public void CloseControls() 
+    {
+        ControlPopUpObject.SetActive(false);
     }
 
     public void TitleButton()
