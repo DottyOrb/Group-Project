@@ -60,10 +60,11 @@ public class Weaponfollow : MonoBehaviour
        if (scoreScript.score >= 100)
         {
             canFire = true;
-            playerMovement.playerHealth = 5;
             StartCoroutine(ShootingActive(10));
            
         }
+
+     
 
         if (scoreScript.score == 0)
         {
