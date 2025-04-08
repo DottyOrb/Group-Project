@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8455142727879522877}
   - component: {fileID: 6388845139281450439}
   - component: {fileID: 4274034333475029841}
-  m_Layer: 7
+  m_Layer: 15
   m_Name: MeleeEnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,6 +154,7 @@ MonoBehaviour:
   minSpawnInterval: 2
   maxSpawnInterval: 5
   distance: 0
-  startSpawning: 20
+  startSpawning: 17.5
   spawnRadius: 2
-  spawnerHealth: 5
+  spawnerHealth: 3
+  SpawnerScore: 15

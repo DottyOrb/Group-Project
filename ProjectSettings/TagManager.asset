@@ -19,8 +19,8 @@ TagManager:
   - EnemyRanged
   - Sword
   - EnemyProjectile
-  - 
-  - 
+  - key
+  - Spawner
   - 
   - 
   - 
