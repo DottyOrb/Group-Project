@@ -7,7 +7,6 @@ public class Score : MonoBehaviour
     public static Score Instance;
     public TMP_Text scoreText;
     public int score;
-    public ProgressBar progressBar;
 
     void Start()
     {
@@ -23,9 +22,7 @@ public class Score : MonoBehaviour
     public void AddToScore(int EnemyScore)
     {
         score += EnemyScore;
-        scoreText.text = "SCORE: " + score.ToString();
-
-        progressBar.Current = score;       
+        scoreText.text = "SCORE: " + score.ToString();      
 
 
     }
@@ -34,6 +31,6 @@ public class Score : MonoBehaviour
 
     void Update()
     {
-
+        
     }
 }

@@ -16,7 +16,7 @@ public class Weaponfollow : MonoBehaviour
     public float timeBetweenFiring;
     public PauseMenu pauseMenu;
     public Score scoreScript;
-
+    public ProgressBar progressBar;
 
     
 
@@ -56,11 +56,11 @@ public class Weaponfollow : MonoBehaviour
             Instantiate(bullet, bulletTransform.position, Quaternion.identity);
         }
 
-        if (scoreScript.score >= 100)
+       if (scoreScript.score >= 100)
         {
             canFire = true;
             StartCoroutine(ShootingActive(10));
-
+           
         }
 
         if (scoreScript.score == 0)
@@ -68,7 +68,7 @@ public class Weaponfollow : MonoBehaviour
             canFire = false;
         }
         
-
+        
 
         /* if (!canFire)
         {
@@ -93,18 +93,18 @@ public class Weaponfollow : MonoBehaviour
 
     private IEnumerator ShootingActive(float delay)
     {
-
+      
+        
         yield return new WaitForSeconds(delay);
         scoreScript.score = 0;
-        
-       
+
     }
+
+
+
 
     
 
 
-   
 
-   
-
-}
+    }
