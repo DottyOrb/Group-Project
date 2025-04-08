@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -2814467942134615914}
   - component: {fileID: -9029670629067756694}
   m_Layer: 0
-  m_Name: keySprite_0
+  m_Name: key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

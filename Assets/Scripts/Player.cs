@@ -4,103 +4,107 @@ using UnityEngine.SceneManagement;
 using Unity.Collections;
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
     public float speed = 5.0f;
-
     public int playerHealth = 5;
-
     public TMP_Text healthText;
-
     public float knockbackForce = 2f;
-
     private Rigidbody2D rb;
-
-    private SpriteRenderer spriteRenderer;
-
+    private SpriteRenderer _spriteRenderer;
+    private Vector2 moveInput;
     public Sprite[] animationSprites;
-
     public HealthBar healthBarScript;
     private Animator animator;
+    private bool canMove = true;
+    public Coroutine IFramesRef;
+    public bool canBeAttacked = true;
+    public Score scoreScript;
+    public int keys = 0;
+    public TMP_Text KeyText;
+
+
+    public void Awake()
+    {
+        instance = this;
+    }
     public void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-       animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (canMove == true)
         {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputX", -1);
-            this.transform.position += Vector3.left * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputX", 1);
-            this.transform.position += Vector3.right * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputY", 1);
-            this.transform.position += Vector3.up * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("InputY", -1);
-            this.transform.position += Vector3.down * this.speed * Time.deltaTime;
-        }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) 
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputX", animator.GetFloat("InputX"));
-            animator.SetFloat("InputX", 0);
-        }
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
-        {
-            animator.SetBool("isWalking", false);
-            animator.SetFloat("LastInputY", animator.GetFloat("InputY"));
-            animator.SetFloat("InputY", 0);
+            rb.linearVelocity = moveInput * speed;
         }
 
-        healthBarScript.Current = playerHealth;
-
-
+        HealthBar.instance.Current = playerHealth;
+        KeyText.text = "KEYS: " + keys.ToString();
     }
 
-  
+    public void Move(InputAction.CallbackContext context)
+    {
+        animator.SetBool("isWalking", true);
+
+        if (context.canceled)
+        {
+            animator.SetBool("isWalking", false);
+            animator.SetFloat("LastInputX", moveInput.x);
+            animator.SetFloat("LastInputY", moveInput.y);
+        }
+
+        moveInput = context.ReadValue<Vector2>();
+        animator.SetFloat("InputX", moveInput.x);
+        animator.SetFloat("InputY", moveInput.y);
+    }
 
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") || other.gameObject.layer == LayerMask.NameToLayer("Spawner"))
         {
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
-            StartCoroutine(PlayerKnockback(direction, knockbackForce));
-
-            playerHealth--;
+            if (IFramesRef == null && canBeAttacked == true)
+            {
+                StartCoroutine(PlayerKnockback(direction, knockbackForce));
+                playerHealth--;
+                IFramesRef = StartCoroutine(IFrames());
+            }
             healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
             {
                 SceneManager.LoadScene("GameOver");
             }
-;
         }
     }
 
     public IEnumerator PlayerKnockback(Vector2 direction, float knockbackForce)
     {
+        canMove = false;
+        rb.linearVelocity = Vector2.zero;
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
 
         rb.linearVelocity = Vector2.zero;
+        canMove = true;
+    }
+
+    public IEnumerator IFrames()
+    {
+        canBeAttacked = false;
+        _spriteRenderer.color = new Color(1, 0, 0, 1);
+        yield return new WaitForSeconds(0.5f);
+        _spriteRenderer.color = new Color(1, 1, 1, 1);
+        canBeAttacked = true;
+        IFramesRef = null;
     }
 }

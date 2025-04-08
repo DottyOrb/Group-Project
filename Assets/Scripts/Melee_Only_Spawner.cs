@@ -19,10 +19,14 @@ public class Melee_Only_Spawner : MonoBehaviour
 
     public int spawnerHealth;
 
+    public int SpawnerScore = 15;
+
     public Coroutine SpawnEnemiesRef;
+    SpriteRenderer sprite;
     #endregion
     private void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
         GetTarget();
     }
     private void Update()
@@ -68,8 +72,10 @@ public class Melee_Only_Spawner : MonoBehaviour
             spawnerHealth--;
             if (spawnerHealth <= 0)
             {
+                Score.Instance.AddToScore(SpawnerScore);
                 Destroy(gameObject);
             }
+            StartCoroutine(ChangeColour());
         }
     }
     private void GetTarget()
@@ -78,5 +84,14 @@ public class Melee_Only_Spawner : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
+    }
+
+    public IEnumerator ChangeColour()
+    {
+        sprite.color = new Color(1, 0, 0, 1);
+
+        yield return new WaitForSeconds(0.2f);
+
+        sprite.color = new Color(1, 1, 1, 1);
     }
 }
