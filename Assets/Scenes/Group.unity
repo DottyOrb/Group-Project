@@ -26536,6 +26536,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 87543036631906254, guid: b4a2cbf3ec968af4d8cc4ef27f8a7f64, type: 3}
   m_PrefabInstance: {fileID: 1613965676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1623606910 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1054192109897431409, guid: 90006e10cd567464f8c74a0042b250a1, type: 3}
+  m_PrefabInstance: {fileID: 3770310032990239453}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b59afa2284c5e41b7932a2562e7f81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1633876755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -105354,8 +105365,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8c80db5ab7bb68b4aa2083d4704dc204, type: 3}
-  m_Resource: {fileID: 8300000, guid: 8c80db5ab7bb68b4aa2083d4704dc204, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -106253,6 +106264,10 @@ PrefabInstance:
       propertyPath: progressBar
       value: 
       objectReference: {fileID: 1635049377}
+    - target: {fileID: 3267144018492658467, guid: 90006e10cd567464f8c74a0042b250a1, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 1623606910}
     - target: {fileID: 4268549362371505531, guid: 90006e10cd567464f8c74a0042b250a1, type: 3}
       propertyPath: m_Name
       value: Player
