@@ -31,7 +31,7 @@ public class Weaponfollow : MonoBehaviour
     
     void Update()
     {
-        if (!PauseMenu.isPaused)
+        if (!PauseMenu.isPaused) // Moves the Sword if the pause menu isnt active
         {
             mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -42,13 +42,13 @@ public class Weaponfollow : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
         }
 
-        if (Input.GetMouseButtonDown(0) && canFire)
+        if (Input.GetMouseButtonDown(0) && canFire) // Input Script for shooting
         {
             
             Instantiate(bullet, bulletTransform.position, Quaternion.identity);
         }
 
-        if (scoreScript.score >= 100)
+        if (scoreScript.score >= 100) // Enables powerup if conditions are met
         {
             canFire = true;
             if (ShootingActiveRef == null)
@@ -72,7 +72,7 @@ public class Weaponfollow : MonoBehaviour
         }
     }
 
-    private IEnumerator ShootingActive(float delay)
+    private IEnumerator ShootingActive(float delay) // Shooting Delay
     {
         Player.instance.playerHealth = 5;
         yield return new WaitForSeconds(delay);

@@ -22,7 +22,7 @@ public class Score : MonoBehaviour
     public void AddToScore(int EnemyScore)
     {
         score += EnemyScore;
-        scoreText.text = "SCORE: " + score.ToString();      
+        scoreText.text = "SCORE: " + score.ToString(); // Updates the Score Text
 
 
     }
