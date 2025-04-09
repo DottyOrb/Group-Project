@@ -17,9 +17,9 @@ public class Weaponfollow : MonoBehaviour
     public PauseMenu pauseMenu;
     public Score scoreScript;
     public ProgressBar progressBar;
-    public PlayerMovement playerMovement;
+    public Player player;
+    public Coroutine ShootingActiveRef;
 
-    
 
     void Start()
     {
@@ -28,9 +28,6 @@ public class Weaponfollow : MonoBehaviour
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         
     }
-
-    
-
     
     void Update()
     {
@@ -45,70 +42,40 @@ public class Weaponfollow : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
         }
 
-
-
-
-       
-
-        
         if (Input.GetMouseButtonDown(0) && canFire)
         {
             
             Instantiate(bullet, bulletTransform.position, Quaternion.identity);
         }
 
-       if (scoreScript.score >= 100)
+        if (scoreScript.score >= 100)
         {
             canFire = true;
-            StartCoroutine(ShootingActive(10));
-           
+            if (ShootingActiveRef == null)
+            {
+                ShootingActiveRef = StartCoroutine(ShootingActive(10));
+            }
+        }
+        else
+        {
+            if (ShootingActiveRef != null)
+            { 
+                StopAllCoroutines();
+                ShootingActiveRef = null;
+            }
         }
 
-     
-
+        
         if (scoreScript.score == 0)
         {
-            canFire = false;
+           canFire = false;
         }
-        
-        
-
-        /* if (!canFire)
-        {
-            timer += Time.deltaTime;
-            if (timer > timeBetweenFiring)
-            {
-                canFire = true;
-                timer = 0;
-                Instantiate(bullet, bulletTransform.position, Quaternion.identity);
-            
-            } 
-
-        
-
-
-        } */
-
-            //Debug.Log(canFire);
-
-
     }
 
     private IEnumerator ShootingActive(float delay)
     {
-      
-        
+        Player.instance.playerHealth = 5;
         yield return new WaitForSeconds(delay);
         scoreScript.score = 0;
-        
-
     }
-
-
-
-
-    
-
-
-
-    }
+}

@@ -26,9 +26,11 @@ public class HealthBar : MonoBehaviour
     public Image Fill;
     public Color Color;
     public Player playerScript;
-    void Start()
-    {
+    public static HealthBar instance;
 
+    private void Awake()
+    {
+        instance = this;
     }
 
     // Update is called once per frame

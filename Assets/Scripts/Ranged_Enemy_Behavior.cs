@@ -82,31 +82,10 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
         }
     }
 
-    //void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        if (canAttack)
-    //        {
-    //            //Attack Script was here
-    //            PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-    //        }
-    //    }
-    //}
-
-    //public void DamageEnemy(int damage)
-    //{
-    //    int finalDamage = damage * (100 / defence);
-    //    health -= finalDamage;
-    //}
 
     private void EnemyKilled()
     {
         this.amountKilled++;
-        if (this.amountKilled >= 100)
-        {
-
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -134,6 +113,7 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
                     Instantiate(enemySpawner, spawnPosition, Quaternion.identity);
                 }
             }
+            StartCoroutine(ChangeColour());
         }
     }
 
@@ -164,5 +144,13 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
             _animationFrame = 0;
         }
         _spriteRenderer.sprite = this.animationSprites[_animationFrame];
+    }
+    public IEnumerator ChangeColour()
+    {
+        _spriteRenderer.color = new Color(1, 0, 0, 1);
+
+        yield return new WaitForSeconds(0.2f);
+
+        _spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 }

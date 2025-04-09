@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4966494858805589181}
   - component: {fileID: 2018082372161511233}
   - component: {fileID: 585529657026718075}
-  m_Layer: 7
+  m_Layer: 15
   m_Name: RangedEnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,9 +151,10 @@ MonoBehaviour:
   target: {fileID: 0}
   minEnemiesPerBatch: 1
   maxEnemiesPerBatch: 3
-  minSpawnInterval: 2
+  minSpawnInterval: 3
   maxSpawnInterval: 5
   distance: 0
-  startSpawning: 20
+  startSpawning: 17.5
   spawnRadius: 2
-  spawnerHealth: 5
+  spawnerHealth: 3
+  SpawnerScore: 15

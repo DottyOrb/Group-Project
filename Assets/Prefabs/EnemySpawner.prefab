@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2452834717112196226}
   - component: {fileID: 7871553555797662558}
   - component: {fileID: 67798473754001674}
-  m_Layer: 7
+  m_Layer: 15
   m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,8 @@ MonoBehaviour:
   maxEnemiesPerBatch: 3
   minSpawnInterval: 2
   maxSpawnInterval: 5
+  SpawnerScore: 15
   distance: 0
-  startSpawning: 20
+  startSpawning: 17.5
   spawnRadius: 2
-  spawnerHealth: 5
+  spawnerHealth: 3

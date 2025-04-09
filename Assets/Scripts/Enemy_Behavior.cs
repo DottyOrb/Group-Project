@@ -62,26 +62,6 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
-    //void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        if (canAttack)
-    //        {
-    //            //StartCoroutine(AttackCooldown());
-    //            //PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-    //        }
-    //    }
-    //}
-
-    //IEnumerator AttackCooldown()
-    //{
-    //    canAttack = false;
-
-    //    yield return new WaitForSeconds(attackSpeed);
-
-    //    canAttack = true;
-    //}
 
     public void DamageEnemy(int damage)
     {
@@ -136,12 +116,6 @@ public class Enemy_Behavior : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
     }
-
-
-
-   
-
-   
 
     private void AnimateSprite()
     {
