@@ -19,16 +19,18 @@ public class HealthBar : MonoBehaviour
     }
 #endif
 
-    public int Minimum;
-    public int Maximum;
-    public int Current;
+    public int Minimum; // Minimum Score
+    public int Maximum; // Maximum Score
+    public int Current; // Current Score
     public Image Mask;
     public Image Fill;
     public Color Color;
     public Player playerScript;
-    void Start()
-    {
+    public static HealthBar instance;
 
+    private void Awake()
+    {
+        instance = this;
     }
 
     // Update is called once per frame
@@ -42,7 +44,7 @@ public class HealthBar : MonoBehaviour
         float currentOffset = Current - Minimum;
         float maximumOffset = Maximum - Minimum;
         float fillAmount = currentOffset / maximumOffset;
-        Mask.fillAmount = fillAmount;
+        Mask.fillAmount = fillAmount; // Uses the amount of score the player has to update the progress bar
 
         Fill.color = Color;
     }

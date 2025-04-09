@@ -19,9 +19,9 @@ public class ProgressBar : MonoBehaviour
     }
 #endif
 
-    public int Minimum;
-    public int Maximum;
-    public int Current;
+    public int Minimum; // Maximum Score
+    public int Maximum; // Minimum Score
+    public int Current; // Current Score
     public Image Mask;
     public Image Fill;
     public Color Color;
@@ -44,7 +44,7 @@ public class ProgressBar : MonoBehaviour
         float currentOffset = Current - Minimum;
         float maximumOffset = Maximum - Minimum;
         float fillAmount = currentOffset / maximumOffset;
-        Mask.fillAmount = fillAmount;
+        Mask.fillAmount = fillAmount; // Takes the number score and refers that to the progress bar
 
         Fill.color = Color;
     }

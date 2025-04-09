@@ -24,7 +24,6 @@ public class Enemy_Behavior : MonoBehaviour
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
-    //private bool canAttack = true; // Controls Attack Delay
     NavMeshAgent agent;
     [SerializeField] Transform target;
     private Rigidbody2D rb;
@@ -54,7 +53,7 @@ public class Enemy_Behavior : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // Movement Conditions
-        if (distanceBetween < distance) // Checks whether the Enemy is far away from the Player - Starts Movement, Disables Attack
+        if (distanceBetween < distance) // Checks whether the Enemy is far away from the Player - Starts Movement
         {
             agent.SetDestination(target.position);
             agent.speed = speed;
@@ -62,26 +61,6 @@ public class Enemy_Behavior : MonoBehaviour
         }
     }
 
-    //void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        if (canAttack)
-    //        {
-    //            //StartCoroutine(AttackCooldown());
-    //            //PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-    //        }
-    //    }
-    //}
-
-    //IEnumerator AttackCooldown()
-    //{
-    //    canAttack = false;
-
-    //    yield return new WaitForSeconds(attackSpeed);
-
-    //    canAttack = true;
-    //}
 
     public void DamageEnemy(int damage)
     {
@@ -100,10 +79,10 @@ public class Enemy_Behavior : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
-            StartCoroutine(enemyKnockback(direction, knockbackForce));
+            StartCoroutine(enemyKnockback(direction, knockbackForce)); // Knockbacks Enemy
 
             health--;
-            int spawnEnemySpawner = Random.Range(0, 16);
+            int spawnEnemySpawner = Random.Range(0, 16); // Decides whether to spawn a spawner or not
             if (health <= 0)
             {
                 if (spawnEnemySpawner <= 14)
@@ -121,14 +100,14 @@ public class Enemy_Behavior : MonoBehaviour
             }
         }
     }
-    private void GetTarget()
+    private void GetTarget() // Finds game object with the player tag and asigns them as the target
     {
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
-    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce)
+    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce) // Knocks Enemy Back
     {
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
@@ -136,12 +115,6 @@ public class Enemy_Behavior : MonoBehaviour
 
         rb.linearVelocity = Vector2.zero;
     }
-
-
-
-   
-
-   
 
     private void AnimateSprite()
     {

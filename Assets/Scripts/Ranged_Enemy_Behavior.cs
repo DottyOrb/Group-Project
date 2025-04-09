@@ -11,7 +11,6 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
     public float distanceBetween; // Distance for when Enemy stops moving if too close to player
     public int attackPower; // How much damage the Enemy does
     public int health;
-    public int defence; // Final Damage = Incoming Damage * (100/(100defence))
     public int EnemyScore;
     public int amountKilled;
     public Transform firingPoint;
@@ -26,7 +25,6 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
 
     #region Private Variables
     private float distance; // The distance between the Enemy and Player
-    //private bool canAttack = true; // Controls Attack Delay
     private float timeToFire;
     NavMeshAgent agent;
     [SerializeField] Transform target;
@@ -58,7 +56,7 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
         direction.Normalize();
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // Movement Conditions
+        // Movement Conditions - Leszek D
         if (distanceBetween < distance) // Checks whether the Enemy is far away from the Player - Starts Movement, Disables Attack
         {
             agent.SetDestination(target.position);
@@ -82,31 +80,10 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
         }
     }
 
-    //void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        if (canAttack)
-    //        {
-    //            //Attack Script was here
-    //            PlayerHealthPlaceholder.instance.DamagePlayer(attackPower);
-    //        }
-    //    }
-    //}
-
-    //public void DamageEnemy(int damage)
-    //{
-    //    int finalDamage = damage * (100 / defence);
-    //    health -= finalDamage;
-    //}
 
     private void EnemyKilled()
     {
         this.amountKilled++;
-        if (this.amountKilled >= 100)
-        {
-
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -114,11 +91,11 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Sword") || other.gameObject.layer == LayerMask.NameToLayer("Projectile"))
         {
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
-            StartCoroutine(enemyKnockback(direction, knockbackForce));
+            StartCoroutine(enemyKnockback(direction, knockbackForce)); // Knocks Enemy Back
 
             health--;
 
-            int spawnEnemySpawner = Random.Range(0, 16);
+            int spawnEnemySpawner = Random.Range(0, 16); // Decides whether to spawn a spawner or not
             if (health <= 0)
             {
                 if (spawnEnemySpawner <=14)
@@ -134,10 +111,11 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
                     Instantiate(enemySpawner, spawnPosition, Quaternion.identity);
                 }
             }
+            StartCoroutine(ChangeColour());
         }
     }
 
-    private void GetTarget()
+    private void GetTarget() // Finds game object with the player tag and asigns them as the target
     {
         if (GameObject.FindGameObjectWithTag("Player"))
         {
@@ -145,7 +123,7 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
         }
     }
 
-    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce)
+    public IEnumerator enemyKnockback(Vector2 direction, float knockbackForce) // Knocks Enemy Back
     {
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
@@ -164,5 +142,13 @@ public class Ranged_Enemy_Behavior : MonoBehaviour
             _animationFrame = 0;
         }
         _spriteRenderer.sprite = this.animationSprites[_animationFrame];
+    }
+    public IEnumerator ChangeColour() // Changes the sprite color when they are hit to show a visual cue for the player
+    {
+        _spriteRenderer.color = new Color(1, 0, 0, 1);
+
+        yield return new WaitForSeconds(0.2f);
+
+        _spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 }
