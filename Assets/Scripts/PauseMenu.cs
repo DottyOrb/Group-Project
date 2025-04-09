@@ -5,17 +5,22 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool isPaused;
     public GameObject PauseMenuObject;
+    public GameObject ControlPopUpObject;
 
+    private void Start()
+    {
+        ControlPopUpObject.SetActive(false); // Deactivates Control Menu popup at the start
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape)) // Pauses the game
         {
             isPaused = !isPaused;
             PauseToggle();
         }
     }
 
-    void PauseToggle()
+    void PauseToggle() // Stops Game Time
     {
         if (isPaused)
         {
@@ -29,20 +34,30 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void ResumeButton()
+    public void ResumeButton() // Resumes Game Time
     {
         isPaused = !isPaused;
         PauseToggle();
     }
 
-    public void TitleButton()
+    public void OpenControls()  // Enables Control Screen
+    {
+        ControlPopUpObject.SetActive(true);
+    }
+    
+    public void CloseControls() // Closes Control Menu 
+    {
+        ControlPopUpObject.SetActive(false);
+    }
+
+    public void TitleButton() // Returns player to tiles screen
     {
         isPaused = !isPaused;
         PauseToggle();
         SceneManager.LoadScene("TitleMenu");
     }
 
-    public void QuitButton()
+    public void QuitButton() // Quits Application
     {
         Application.Quit();
     }
