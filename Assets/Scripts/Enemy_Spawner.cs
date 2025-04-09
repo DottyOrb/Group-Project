@@ -19,10 +19,10 @@ public class Enemy_Spawner : MonoBehaviour
 
     public int SpawnerScore = 15;
 
-    public float distance;
-    public float startSpawning = 10f;
+    public float distance; // Distance between the player and spawner
+    public float startSpawning = 10f; //using the variable above, the spawner checks if the player is close enough to it
 
-    public float spawnRadius = 2f;
+    public float spawnRadius = 2f; // Circle Radius around the spawner
 
     public int spawnerHealth;
 
@@ -58,16 +58,16 @@ public class Enemy_Spawner : MonoBehaviour
     {
         while (true)
         {
-            float interval = Random.Range(minSpawnInterval, maxSpawnInterval);
+            float interval = Random.Range(minSpawnInterval, maxSpawnInterval); // Decides when to spawn enemies in
             yield return new WaitForSeconds(interval);
 
-            int enemiesBaatchSize = Random.Range(minEnemiesPerBatch, maxEnemiesPerBatch);
+            int enemiesBaatchSize = Random.Range(minEnemiesPerBatch, maxEnemiesPerBatch); // Decides how many enemies to spawn
             for (int i = 0; i < enemiesBaatchSize; i++)
             {
                 Vector2 spawnOffset = Random.insideUnitCircle * spawnRadius;
-                Vector2 spawnPosition = (Vector2)gameObject.transform.position + spawnOffset;
+                Vector2 spawnPosition = (Vector2)gameObject.transform.position + spawnOffset; // Decides what position to spawn enemies in
 
-                int chooseEnemyType = Random.Range(0, 5);
+                int chooseEnemyType = Random.Range(0, 5); // Decides which enemy type to spawn
                 if (chooseEnemyType >= 0 && chooseEnemyType <= 3)
                 {
                     Instantiate(MeleeEnemyPrefab, spawnPosition, Quaternion.identity);
@@ -92,14 +92,14 @@ public class Enemy_Spawner : MonoBehaviour
             StartCoroutine(ChangeColour());
         }
     }
-    private void GetTarget()
+    private void GetTarget() // Finds game object with the player tag and asigns them as the target
     {
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
-    public IEnumerator ChangeColour()
+    public IEnumerator ChangeColour() // Changes the sprite color when they are hit to show a visual cue for the player
     {
         sprite.color = new Color(1, 0, 0, 1);
 

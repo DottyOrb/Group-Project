@@ -5,11 +5,11 @@ public class WinScreen : MonoBehaviour
 {
     public void titleButton() 
     {
-        SceneManager.LoadScene("TitleMenu");
+        SceneManager.LoadScene("TitleMenu"); // Loads Title Menu
     }
 
     public void QuitButton()
     {
-        Application.Quit();
+        Application.Quit(); // Quits Application
     }
 }
