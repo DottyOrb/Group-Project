@@ -8,7 +8,7 @@ public class Enemy_Bullet_Script : MonoBehaviour
 
     #region Private Variables
     private Rigidbody2D rb;
-    [SerializeField] private float lifeTime = 3f;
+    [SerializeField] private float lifeTime = 3f; // How long it takes for the bullet to despawn if it doesnt hit anything
     #endregion
 
     private void Start()
@@ -22,7 +22,7 @@ public class Enemy_Bullet_Script : MonoBehaviour
         rb.linearVelocity = transform.right * force;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other) //Destoys the bullet when they hit a collider
     {
         Destroy(gameObject);
     }

@@ -5,16 +5,16 @@ public class GameOverScreen : MonoBehaviour
 {
     public void RetryButton() 
     {
-        SceneManager.LoadScene("Group");
+        SceneManager.LoadScene("Group"); // Restarts Level
     }
 
     public void TitleButton() 
     {
-        SceneManager.LoadScene("TitleMenu");
+        SceneManager.LoadScene("TitleMenu"); // Returns to Title Screen
     }
 
     public void QuitButton() 
     { 
-        Application.Quit();
+        Application.Quit(); // Quits Application
     }
 }

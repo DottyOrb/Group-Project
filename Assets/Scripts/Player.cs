@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public Coroutine IFramesRef;
     public bool canBeAttacked = true;
     public Score scoreScript;
-    public int keys = 0;
+    public int keys = 0; // Just a viusal cue for how many keys the player has collected
     public TMP_Text KeyText;
 
 
@@ -42,14 +42,14 @@ public class Player : MonoBehaviour
     {
         if (canMove == true)
         {
-            rb.linearVelocity = moveInput * speed;
+            rb.linearVelocity = moveInput * speed; // Moves player acording to inputs if canMove is true
         }
 
-        HealthBar.instance.Current = playerHealth;
-        KeyText.text = "KEYS: " + keys.ToString();
+        HealthBar.instance.Current = playerHealth; // Updates the player health bar
+        KeyText.text = "KEYS: " + keys.ToString(); // Updates the key text
     }
 
-    public void Move(InputAction.CallbackContext context)
+    public void Move(InputAction.CallbackContext context) // Animations
     {
         animator.SetBool("isWalking", true);
 
@@ -74,19 +74,19 @@ public class Player : MonoBehaviour
             Vector2 direction = (this.transform.position - other.transform.position).normalized;
             if (IFramesRef == null && canBeAttacked == true)
             {
-                StartCoroutine(PlayerKnockback(direction, knockbackForce));
+                StartCoroutine(PlayerKnockback(direction, knockbackForce)); // Knocks player back
                 playerHealth--;
-                IFramesRef = StartCoroutine(IFrames());
+                IFramesRef = StartCoroutine(IFrames()); // Starts the Invincibilty Frames
             }
             healthText.text = "HP: " + playerHealth.ToString();
             if (playerHealth <= 0)
             {
-                SceneManager.LoadScene("GameOver");
+                SceneManager.LoadScene("GameOver"); // If the player health is 0, loads the game over scene
             }
         }
     }
 
-    public IEnumerator PlayerKnockback(Vector2 direction, float knockbackForce)
+    public IEnumerator PlayerKnockback(Vector2 direction, float knockbackForce) // Knocks player back when hit, also changes their color quickly for a visual cue
     {
         canMove = false;
         rb.linearVelocity = Vector2.zero;
@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         canMove = true;
     }
 
-    public IEnumerator IFrames()
+    public IEnumerator IFrames() // Gives the Player Invinablity for 0.5 seconds after getting hit
     {
         canBeAttacked = false;
         _spriteRenderer.color = new Color(1, 0, 0, 1);

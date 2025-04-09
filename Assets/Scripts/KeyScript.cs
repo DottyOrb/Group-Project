@@ -6,7 +6,7 @@ public class KeyScript : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Destroy(gameObject); 
+            Destroy(gameObject); // Destroys Key when the player interacts with it
         }
     }
 }

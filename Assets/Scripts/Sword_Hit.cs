@@ -16,7 +16,7 @@ public class Sword_Hit : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyMelee") || other.gameObject.layer == LayerMask.NameToLayer("EnemyRanged") || other.gameObject.layer == LayerMask.NameToLayer("EnemyProjectile") || other.gameObject.layer == LayerMask.NameToLayer("Spawner"))
         {
-            HitSource.Play();
+            HitSource.Play(); // Plays Sound effect when conditions are met
         }
     }
 }
